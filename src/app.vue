@@ -9,7 +9,7 @@
   <div>
     <BaseHeader class="sticky top-0 z-10" />
 
-    <main class="container mx-auto max-w-sm px-4 pt-3 pb-32 h-full">
+    <main class="container mx-auto max-w-lg px-4 pt-3 pb-32 h-full">
       <CustomTransition type="up">
         <RouterView v-slot="{ Component }">
           <component :is="Component" />

@@ -49,16 +49,29 @@
     <Teleport to="#modal">
       <div class="fixed bottom-0 left-0 w-full">
         <CustomTransition type="pop">
-          <div v-if="!toggled" class="absolute bottom-4 left-4 right-4">
-            <BaseButton class="w-full" variant="primary" @click="toggle">
+          <div v-if="!toggled" class="absolute bottoms-4 lmd:left-4 right-4">
+            <BaseButton
+              class="w-full md:hidden"
+              variant="primary"
+              @click="toggle"
+            >
               <template #icon>
                 <PlusIcon class="w-6 h-6" />
               </template>
               Add
             </BaseButton>
+
+            <BaseButton class="hidden md:block" circle center @click="toggle">
+              <template #icon>
+                <PlusIcon class="w-6 h-6 mx-auto" />
+              </template>
+            </BaseButton>
           </div>
 
-          <div v-else class="absolute bottom-4 left-4 right-4 flex space-x-3">
+          <div
+            v-else
+            class="absolute bottoms-4 lmd:left-4 right-4 flex gap-3 flex-row md:flex-col md:max-w-xs"
+          >
             <RouterLink
               v-for="{ name, icon, to } in ADD_ROUTES"
               custom

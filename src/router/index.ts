@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ListPage from '@/pages/list-page.vue'
+import AddPage from '@/pages/add-page.vue'
+import EditPage from '@/pages/edit-page.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,12 +14,12 @@ const router = createRouter({
     {
       path: '/add',
       name: 'add',
-      component: () => import('@/pages/add-page.vue'),
+      component: AddPage,
     },
     {
       path: '/:id',
       name: 'edit',
-      component: () => import('@/pages/edit-page.vue'),
+      component: EditPage,
     },
   ],
 })

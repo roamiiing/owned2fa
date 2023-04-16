@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const typography = require('@tailwindcss/typography')
 const defaultTheme = require('tailwindcss/defaultTheme')
+const plugin = require('tailwindcss/plugin')
 
 const getCssVarName = name => `--fxui-${name}`
 
@@ -100,11 +101,103 @@ module.exports = {
       lg: '1024px',
       xl: '1280px',
       '2xl': '1536px',
+
+      lsm: { max: '639px' },
+      lmd: { max: '767px' },
+      llg: { max: '1023px' },
+      lxl: { max: '1279px' },
+      l2xl: { max: '1535px' },
     },
     fontFamily: {
       primary: [...defaultTheme.fontFamily.sans],
       headings: [...defaultTheme.fontFamily.sans],
     },
   },
-  plugins: [typography()],
+  plugins: [
+    typography(),
+    plugin(
+      ({ addUtilities, addComponents, e, config, theme, matchUtilities }) => {
+        const addSafeAreaInset = (side, value) =>
+          `calc(${value} + env(safe-area-inset-${side}))`
+
+        matchUtilities(
+          {
+            pts: value => ({
+              paddingTop: addSafeAreaInset('top', value),
+            }),
+            prs: value => ({
+              paddingRight: addSafeAreaInset('right', value),
+            }),
+            pbs: value => ({
+              paddingBottom: addSafeAreaInset('right', value),
+            }),
+            pls: value => ({
+              paddingLeft: addSafeAreaInset('left', value),
+            }),
+            pxs: value => ({
+              paddingLeft: addSafeAreaInset('left', value),
+              paddingRight: addSafeAreaInset('right', value),
+            }),
+            pys: value => ({
+              paddingTop: addSafeAreaInset('top', value),
+              paddingBottom: addSafeAreaInset('bottom', value),
+            }),
+            ps: value => ({
+              paddingTop: addSafeAreaInset('top', value),
+              paddingBottom: addSafeAreaInset('bottom', value),
+              paddingLeft: addSafeAreaInset('left', value),
+              paddingRight: addSafeAreaInset('right', value),
+            }),
+            mts: value => ({
+              marginTop: addSafeAreaInset('top', value),
+            }),
+            mrs: value => ({
+              marginRight: addSafeAreaInset('right', value),
+            }),
+            mbs: value => ({
+              marginBottom: addSafeAreaInset('right', value),
+            }),
+            mls: value => ({
+              marginLeft: addSafeAreaInset('left', value),
+            }),
+            mxs: value => ({
+              marginLeft: addSafeAreaInset('left', value),
+              marginRight: addSafeAreaInset('right', value),
+            }),
+            mys: value => ({
+              marginTop: addSafeAreaInset('top', value),
+              marginBottom: addSafeAreaInset('bottom', value),
+            }),
+            ms: value => ({
+              marginTop: addSafeAreaInset('top', value),
+              marginBottom: addSafeAreaInset('bottom', value),
+              marginLeft: addSafeAreaInset('left', value),
+              marginRight: addSafeAreaInset('right', value),
+            }),
+            tops: value => ({
+              top: addSafeAreaInset('top', value),
+            }),
+            rights: value => ({
+              right: addSafeAreaInset('right', value),
+            }),
+            bottoms: value => ({
+              bottom: addSafeAreaInset('bottom', value),
+            }),
+            lefts: value => ({
+              left: addSafeAreaInset('left', value),
+            }),
+            translatexs: value => ({
+              transform: `translateX(${addSafeAreaInset('left', value)})`,
+            }),
+            translateys: value => ({
+              transform: `translateY(${addSafeAreaInset('top', value)})`,
+            }),
+          },
+          {
+            values: theme('inset'),
+          },
+        )
+      },
+    ),
+  ],
 }

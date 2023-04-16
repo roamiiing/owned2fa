@@ -79,14 +79,17 @@
 <template>
   <div class="w-full flex flex-col space-y-5">
     <div class="w-full flex flex-col space-y-3 text-center">
+      <p class="text-sm font-light select-none mt-16 text-surface-400">
+        Click to copy
+      </p>
       <pre
-        class="text-4xl text-primary cursor-pointer select-none"
+        class="text-4xl md:text-5xl text-primary cursor-pointer select-none"
         @click="copy"
         >{{ currentCode.code }}</pre
       >
       <p
         class="text-sm font-light select-none"
-        :class="secondsLeft <= 10 ? 'text-error' : 'text-gray-500'"
+        :class="secondsLeft <= 10 ? 'text-error' : 'text-surface-400'"
       >
         Expires in {{ secondsLeft }} seconds
       </p>
@@ -103,7 +106,7 @@
     </form>
 
     <Teleport to="#modal">
-      <div class="fixed bottom-4 left-4 right-4">
+      <div class="fixed bottoms-4 left-4 right-4 md:hidden">
         <BaseButton class="w-full" @click="copy">Copy</BaseButton>
       </div>
     </Teleport>
