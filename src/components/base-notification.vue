@@ -89,8 +89,8 @@
     </div>
 
     <div
-      class="absolute top-0 -left-3 h-0.5 w-full"
-      :style="isInfinite ? { transition: `width ${duration}ms linear` } : {}"
+      class="absolute top-0 -left-3 h-0.5 w-full !m-0"
+      :style="!isInfinite ? { transition: `width ${duration}ms linear` } : {}"
       :class="{
         'bg-success-lighter': type === 'success',
         'bg-error-lighter': type === 'error',
@@ -98,6 +98,6 @@
         'bg-primary-lightest': type === 'info',
         '!w-0': startCounter,
       }"
-    ></div>
+    />
   </div>
 </template>
