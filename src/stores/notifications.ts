@@ -35,7 +35,7 @@ export const useNotificationsStore = defineStore(
     }
 
     return {
-      notifications: readonly(notifications),
+      notifications,
       addNotification,
       removeNotification,
     }
@@ -50,12 +50,15 @@ export const useNotify = () => {
       text: notification.text,
       duration: notification.duration ?? DEFAULT_NOTIFICATION_DURATION,
       type: notification.type ?? NotificationType.Info,
+      actions: notification.actions,
     }
 
     const id = store.addNotification(mapped)
 
-    setTimeout(() => {
-      store.removeNotification(id)
-    }, mapped.duration)
+    if (mapped.duration !== Infinity) {
+      setTimeout(() => {
+        store.removeNotification(id)
+      }, mapped.duration)
+    }
   }
 }

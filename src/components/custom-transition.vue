@@ -1,9 +1,3 @@
-<template>
-  <Transition v-bind="classes">
-    <slot />
-  </Transition>
-</template>
-
 <script setup lang="ts">
   import { computed } from 'vue'
 
@@ -54,3 +48,9 @@
     return null
   })
 </script>
+
+<template>
+  <Transition v-bind="classes">
+    <slot />
+  </Transition>
+</template>

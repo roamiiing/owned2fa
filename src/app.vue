@@ -1,8 +1,40 @@
 <script setup lang="ts">
+  import { onMounted } from 'vue'
   import { RouterView } from 'vue-router'
   import BaseHeader from '@/components/base-header.vue'
   import CustomTransition from '@/components/custom-transition.vue'
-  import AppNotifications from './containers/app-notifications.vue'
+  import AppNotifications from '@/containers/app-notifications.vue'
+  import { useNotify } from '@/stores/notifications'
+  import { NotificationType } from '@/utils/notifications'
+
+  import { registerSW } from 'virtual:pwa-register'
+
+  const notify = useNotify()
+
+  onMounted(() => {
+    if (!import.meta.env.PROD) {
+      return
+    }
+
+    const updateSW = registerSW({
+      onNeedRefresh() {
+        notify({
+          text: 'An update is available',
+          type: NotificationType.Warning,
+          duration: Infinity,
+          actions: [
+            {
+              key: 'install-update',
+              text: 'Install',
+              callback() {
+                updateSW()
+              },
+            },
+          ],
+        })
+      },
+    })
+  })
 </script>
 
 <template>

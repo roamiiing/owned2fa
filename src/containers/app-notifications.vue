@@ -1,23 +1,3 @@
-<template>
-  <TransitionGroup
-    enter-active-class="absolute transform-gpu opacity-0 -translate-y-full"
-    leave-active-class="absolute transform-gpu"
-    leave-to-class="opacity-0 -translate-x-full"
-    tag="aside"
-    class="p-4 pb-0 space-y-3 max-w-md"
-  >
-    <BaseNotification
-      v-for="{ id, type, text, duration } in reversed"
-      :key="id"
-      class="transition-all duration-300"
-      :type="type"
-      :text="text"
-      :duration="duration"
-      @close="store.removeNotification(id)"
-    />
-  </TransitionGroup>
-</template>
-
 <script setup lang="ts">
   import { computed } from 'vue'
 
@@ -28,3 +8,24 @@
 
   const reversed = computed(() => [...store.notifications].reverse())
 </script>
+
+<template>
+  <TransitionGroup
+    enter-active-class="absolute transform-gpu opacity-0 -translate-y-full"
+    leave-active-class="absolute transform-gpu"
+    leave-to-class="opacity-0 -translate-x-full"
+    tag="aside"
+    class="p-4 pb-0 space-y-3 max-w-md"
+  >
+    <BaseNotification
+      v-for="{ id, type, text, duration, actions } in reversed"
+      :key="id"
+      class="transition-all duration-300"
+      :type="type"
+      :text="text"
+      :duration="duration"
+      :actions="actions ?? []"
+      @close="store.removeNotification(id)"
+    />
+  </TransitionGroup>
+</template>

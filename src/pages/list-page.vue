@@ -34,7 +34,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col space-y-3">
     <TotpCard
       v-for="totp in totpList"
       :key="totp.id"
@@ -49,7 +49,7 @@
     <Teleport to="#modal">
       <div class="fixed bottom-0 left-0 w-full">
         <CustomTransition type="pop">
-          <div v-if="!toggled" class="absolute bottoms-4 lmd:left-4 right-4">
+          <div v-if="!toggled" class="absolute bottoms-6 lmd:left-4 right-4">
             <BaseButton
               class="w-full md:hidden"
               variant="primary"
@@ -70,7 +70,7 @@
 
           <div
             v-else
-            class="absolute bottoms-4 lmd:left-4 right-4 flex gap-3 flex-row md:flex-col md:max-w-xs"
+            class="absolute bottoms-6 lmd:left-4 right-4 flex gap-3 flex-row md:flex-col md:max-w-xs"
           >
             <RouterLink
               v-for="{ name, icon, to } in ADD_ROUTES"

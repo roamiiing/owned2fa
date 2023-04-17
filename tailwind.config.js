@@ -129,7 +129,7 @@ module.exports = {
               paddingRight: addSafeAreaInset('right', value),
             }),
             pbs: value => ({
-              paddingBottom: addSafeAreaInset('right', value),
+              paddingBottom: addSafeAreaInset('bottom', value),
             }),
             pls: value => ({
               paddingLeft: addSafeAreaInset('left', value),
@@ -155,7 +155,7 @@ module.exports = {
               marginRight: addSafeAreaInset('right', value),
             }),
             mbs: value => ({
-              marginBottom: addSafeAreaInset('right', value),
+              marginBottom: addSafeAreaInset('bottom', value),
             }),
             mls: value => ({
               marginLeft: addSafeAreaInset('left', value),

@@ -1,3 +1,31 @@
+<script setup lang="ts">
+  import { CubeIcon } from '@heroicons/vue/24/solid'
+
+  export interface ButtonProps {
+    variant?: 'primary' | 'secondary' | 'error' | 'success'
+    tag?: 'a' | 'div' | 'button'
+    shadow?: boolean
+    center?: boolean
+    padding?: boolean
+    outline?: boolean
+    semitransparent?: boolean
+    circle?: boolean
+    isLoading?: boolean
+    custom?: boolean
+  }
+
+  withDefaults(defineProps<ButtonProps>(), {
+    variant: 'primary',
+    tag: 'button',
+    shadow: true,
+    center: true,
+    padding: true,
+    outline: false,
+    semitransparent: false,
+    circle: false,
+  })
+</script>
+
 <template>
   <component
     :is="tag"
@@ -52,34 +80,6 @@
     <CubeIcon v-else class="w-6 h-6 animate-spin" />
   </component>
 </template>
-
-<script setup lang="ts">
-  import { CubeIcon } from '@heroicons/vue/24/solid'
-
-  export interface ButtonProps {
-    variant?: 'primary' | 'secondary' | 'error' | 'success'
-    tag?: 'a' | 'div' | 'button'
-    shadow?: boolean
-    center?: boolean
-    padding?: boolean
-    outline?: boolean
-    semitransparent?: boolean
-    circle?: boolean
-    isLoading?: boolean
-    custom?: boolean
-  }
-
-  withDefaults(defineProps<ButtonProps>(), {
-    variant: 'primary',
-    tag: 'button',
-    shadow: true,
-    center: true,
-    padding: true,
-    outline: false,
-    semitransparent: false,
-    circle: false,
-  })
-</script>
 
 <style>
   :root {

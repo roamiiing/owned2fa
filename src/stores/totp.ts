@@ -1,12 +1,12 @@
 import { useLocalStorage } from '@vueuse/core'
-import { nanoid } from 'nanoid'
+import { defineStore } from 'pinia'
 import { readonly, watch } from 'vue'
-import type { Totp } from '@/domain/totp'
 import { getMsLeft, regenerateCode } from '@/domain/generator'
-import { useNotify } from './notifications'
+import type { Totp } from '@/domain/totp'
 import { NotificationType } from '@/utils/notifications'
+import { useNotify } from './notifications'
 
-export const useTotpStore = () => {
+export const useTotpStore = defineStore('totp', () => {
   const notify = useNotify()
   const totpList = useLocalStorage<Totp[]>('totpList', () => [])
 
@@ -50,7 +50,10 @@ export const useTotpStore = () => {
   }
 
   const removeTotp = (totpId: string) => {
-    totpList.value = totpList.value.filter(totp => totp.id !== totpId)
+    totpList.value.splice(
+      totpList.value.findIndex(totp => totp.id === totpId),
+      1,
+    )
   }
 
   const copyCode = (totpId: string) => {
@@ -74,4 +77,4 @@ export const useTotpStore = () => {
     updateTotpFields,
     copyCode,
   }
-}
+})
