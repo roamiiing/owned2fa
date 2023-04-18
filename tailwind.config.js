@@ -29,7 +29,7 @@ const getVarsForColors = (
   return result
 }
 
-const contentFiles = ['src/**/*.{vue,ts,js}']
+const contentFiles = ['index.html', 'src/**/*.{vue,ts,js}']
 
 if (process.env.TAILWIND_STORIES) {
   console.log('[tailwind] Purging stories files')

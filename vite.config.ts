@@ -12,7 +12,7 @@ export default defineConfig({
       manifest: {
         name: 'owned2fa',
         short_name: 'owned2fa',
-        theme_color: '#ffffff',
+        theme_color: '#0ea5e9',
         start_url: '/',
         display: 'standalone',
         icons: [

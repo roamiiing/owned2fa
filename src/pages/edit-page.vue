@@ -92,7 +92,7 @@
   <div class="w-full flex flex-col space-y-5">
     <div class="w-full flex flex-col space-y-3 text-center">
       <p
-        class="text-sm font-light select-none mt-16 text-surface-400 hidden md:block"
+        class="text-sm font-light select-none mt-16 text-surface-500 hidden md:block"
       >
         Click to copy
       </p>
@@ -103,7 +103,11 @@
       >
       <p
         class="text-sm font-light select-none"
-        :class="secondsLeft <= 10 ? 'text-error' : 'text-surface-400'"
+        :class="
+          secondsLeft <= 10
+            ? 'text-error-lighter dark:text-error-darker'
+            : 'text-surface-500'
+        "
       >
         Expires in {{ secondsLeft }} seconds
       </p>

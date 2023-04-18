@@ -1,5 +1,5 @@
 :root {
-  --fxui-color-primary-lightest: #7dd3fc;
+  --fxui-color-primary-lightest: #a2e2ff;
   --fxui-color-primary-lighter: #38bdf8;
   --fxui-color-primary-default: #0ea5e9;
   --fxui-color-primary-darker: #0284c7;
@@ -41,7 +41,8 @@
   --fxui-color-opaque-background: rgba(254, 254, 254, 0.84);
 }
 
-.dark * {
+.dark *,
+.dark {
   --fxui-color-surface-50: #18181b;
   --fxui-color-surface-100: #27272a;
   --fxui-color-surface-200: #3f3f46;

@@ -54,7 +54,7 @@
     @click="emit('copy')"
   >
     <div
-      class="absolute -z-[1] top-0 left-0 h-full opacity-10 bg-primary"
+      class="absolute -z-[1] top-0 left-0 h-full bg-primary-lightest dark:bg-primary-darkest"
       :style="{
         width: `${width * 100}%`,
         transition: width === 0 ? `width ${msLeft}ms linear` : 'none',
@@ -62,14 +62,14 @@
     />
 
     <div class="flex-1">
-      <p class="text-xs text-surface-500 select-none">{{ totp.name }}</p>
-      <pre class="text-xl">{{ totp.code.code }}</pre>
+      <p class="text-xs text-surface-700 select-none">{{ totp.name }}</p>
+      <pre class="text-xl text-surface-900">{{ totp.code.code }}</pre>
     </div>
 
-    <ClipboardIcon class="w-6 h-6 mr-3 text-surface-500" />
+    <ClipboardIcon class="w-6 h-6 mr-3 text-surface-700" />
 
     <RouterLink :to="`/${totp.id}`">
-      <PencilIcon class="w-6 h-6 text-surface-500" />
+      <PencilIcon class="w-6 h-6 text-surface-700" />
     </RouterLink>
   </div>
 </template>

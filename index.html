@@ -1,8 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full bg-background">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.svg" />
+
+    <script>
+      const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)')
+      const theme = localStorage.getItem('owned2fa-theme')
+
+      if (theme === 'dark' || (!theme && darkThemeMq.matches)) {
+        document.querySelector('html').classList.add('dark')
+      }
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>owned2fa</title>
   </head>
