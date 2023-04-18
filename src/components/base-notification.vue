@@ -81,7 +81,7 @@
         v-for="{ key, text, callback } in actions"
         :key="key"
         role="button"
-        class="h-6 w-fit bg-primary text-surface-50 inline-block px-3 rounded-lg media-hover:hover:bg-primary-darker transition-colors duration-200"
+        class="w-fit bg-primary text-surface-50 inline-block px-3 py-1 rounded-lg media-hover:hover:bg-primary-darker transition-colors duration-200"
         @click="callback"
       >
         {{ text }}

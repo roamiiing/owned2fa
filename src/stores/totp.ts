@@ -1,18 +1,43 @@
-import { useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import { readonly, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { getMsLeft, regenerateCode } from '@/domain/generator'
 import type { Totp } from '@/domain/totp'
 import { NotificationType } from '@/utils/notifications'
 import { useNotify } from './notifications'
 
+const TOTP_LS_KEY = 'totpList'
+
+const setLsTotpList = (list: Totp[]) => {
+  const append = list.map(({ code, ...rest }) => ({ ...rest }))
+  localStorage.setItem(TOTP_LS_KEY, JSON.stringify(append))
+}
+
+const getLsTotpList = () => {
+  try {
+    return (
+      JSON.parse(localStorage.getItem(TOTP_LS_KEY) ?? '[]') as Exclude<
+        Totp,
+        'code'
+      >[]
+    ).map(totp => ({
+      ...totp,
+      code: regenerateCode(totp.secret),
+    }))
+  } catch {
+    setLsTotpList([])
+    return []
+  }
+}
+
 export const useTotpStore = defineStore('totp', () => {
   const notify = useNotify()
-  const totpList = useLocalStorage<Totp[]>('totpList', () => [])
+  const totpList = ref<Totp[]>(getLsTotpList())
 
   watch(
     totpList,
     (value, _, cleanup) => {
+      setLsTotpList(value)
+
       value.forEach(totp => {
         const msLeft = getMsLeft(totp.code.expiresAt)
 
@@ -24,13 +49,12 @@ export const useTotpStore = defineStore('totp', () => {
           totp.code = regenerateCode(totp.secret)
         }, getMsLeft(totp.code.expiresAt))
 
-        cleanup(() => clearTimeout(timeout))
+        cleanup(() => {
+          clearTimeout(timeout)
+        })
       })
     },
-    {
-      deep: true,
-      immediate: true,
-    },
+    { immediate: true, deep: true },
   )
 
   const addTotp = (totp: Totp) => {
@@ -70,7 +94,7 @@ export const useTotpStore = defineStore('totp', () => {
   }
 
   return {
-    totpList: readonly(totpList),
+    totpList,
     addTotp,
     getTotp,
     removeTotp,

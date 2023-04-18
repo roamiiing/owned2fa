@@ -2,7 +2,8 @@
   import { DURATION, getMsLeft } from '@/domain/generator'
   import type { Totp } from '@/domain/totp'
   import { ClipboardIcon, PencilIcon } from '@heroicons/vue/24/outline'
-  import { computed, ref, watch } from 'vue'
+  import { ref, watch } from 'vue'
+  import { useEventListener, useTimeoutFn } from '@vueuse/core'
 
   const props = defineProps<{
     totp: Totp
@@ -12,27 +13,39 @@
     (event: 'copy'): void
   }>()
 
-  const msLeft = computed(() => getMsLeft(props.totp.code.expiresAt))
+  const msLeft = ref(0)
 
-  const initialPercentage = computed(() => {
-    return msLeft.value / DURATION / 1000
-  })
+  const width = ref(0)
 
-  const width = ref(initialPercentage.value)
+  const resetWidth = () => {
+    msLeft.value = getMsLeft(props.totp.code.expiresAt)
+    width.value = msLeft.value / DURATION / 1000
+  }
+
+  resetWidth()
+
+  watch(() => props.totp.code.expiresAt, resetWidth)
 
   watch(
-    () => initialPercentage.value,
-    (value, _old, cleanup) => {
-      width.value = value
+    () => width.value,
+    (value, _, cleanup) => {
+      if (value > 0) {
+        const timeout = setTimeout(() => {
+          width.value = 0
+        }, 100)
 
-      const timeout = setTimeout(() => {
-        width.value = 0
-      }, 100)
-
-      cleanup(() => clearTimeout(timeout))
+        cleanup(() => clearTimeout(timeout))
+      }
     },
     { immediate: true },
   )
+
+  // https://developer.mozilla.org/en-US/docs/Web/API/setTimeout#Inactive_tabs
+  useEventListener(document, ['visibilitychange', 'focus'], () => {
+    if (document.visibilityState === 'visible') {
+      resetWidth()
+    }
+  })
 </script>
 
 <template>
@@ -41,7 +54,7 @@
     @click="emit('copy')"
   >
     <div
-      class="absolute -z-[1] top-0 left-0 h-full opacity-50 bg-surface-100"
+      class="absolute -z-[1] top-0 left-0 h-full opacity-10 bg-primary"
       :style="{
         width: `${width * 100}%`,
         transition: width === 0 ? `width ${msLeft}ms linear` : 'none',
@@ -49,14 +62,14 @@
     />
 
     <div class="flex-1">
-      <p class="text-xs text-surface-400 select-none">{{ totp.name }}</p>
+      <p class="text-xs text-surface-500 select-none">{{ totp.name }}</p>
       <pre class="text-xl">{{ totp.code.code }}</pre>
     </div>
 
-    <ClipboardIcon class="w-6 h-6 mr-3 text-surface-400" />
+    <ClipboardIcon class="w-6 h-6 mr-3 text-surface-500" />
 
     <RouterLink :to="`/${totp.id}`">
-      <PencilIcon class="w-6 h-6 text-surface-400" />
+      <PencilIcon class="w-6 h-6 text-surface-500" />
     </RouterLink>
   </div>
 </template>
