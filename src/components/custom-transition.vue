@@ -36,7 +36,7 @@
 
     if (type === 'pop') {
       return {
-        enterActiveClass: 'duration-200 transform ease-out',
+        enterActiveClass: 'duration-100 transform ease-out',
         enterFromClass: 'transform opacity-0 scale-[0.3]',
         enterToClass: 'opacity-100 scale-100',
         leaveActiveClass: 'duration-100 transform ease-in',

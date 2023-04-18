@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { DURATION, getMsLeft } from '@/domain/generator'
   import type { Totp } from '@/domain/totp'
-  import { ClipboardIcon } from '@heroicons/vue/24/outline'
+  import { ClipboardIcon, PencilIcon } from '@heroicons/vue/24/outline'
   import { computed, ref, watch } from 'vue'
 
   const props = defineProps<{
@@ -36,9 +36,9 @@
 </script>
 
 <template>
-  <RouterLink
-    :to="`/${totp.id}`"
-    class="relative w-full bg-backround px-3 py-2 rounded-lg border border-surface-200 flex items-center justify-between overflow-hidden select-none"
+  <div
+    class="relative w-full cursor-pointer bg-backround px-3 py-2 rounded-lg border border-surface-200 flex items-center justify-between overflow-hidden"
+    @click="emit('copy')"
   >
     <div
       class="absolute -z-[1] top-0 left-0 h-full opacity-50 bg-surface-100"
@@ -48,14 +48,15 @@
       }"
     />
 
-    <div>
-      <p class="text-xs text-surface-400">{{ totp.name }}</p>
+    <div class="flex-1">
+      <p class="text-xs text-surface-400 select-none">{{ totp.name }}</p>
       <pre class="text-xl">{{ totp.code.code }}</pre>
     </div>
 
-    <ClipboardIcon
-      class="w-6 h-6 text-surface-400"
-      @click.prevent="emit('copy')"
-    />
-  </RouterLink>
+    <ClipboardIcon class="w-6 h-6 mr-3 text-surface-400" />
+
+    <RouterLink :to="`/${totp.id}`">
+      <PencilIcon class="w-6 h-6 text-surface-400" />
+    </RouterLink>
+  </div>
 </template>
